@@ -2,22 +2,23 @@ package com.osinox.osinox.mapper;
 import com.osinox.osinox.entity.Persona;
 import com.osinox.osinox.dto.PersonaDto;
 public class PersonaMapper {
-    public static PersonaDto toDto(Persona p) {
-        if (p == null) return null;
-        return new PersonaDto(
-                p.getId(),
-                p.getTipoPersona() == null ? null : p.getTipoPersona().name(),
-                p.getNombreRazonSocial(),
-                p.getTipoDocumento() == null ? null : p.getTipoDocumento().name(),
-                p.getNumeroDocumento(),
-                p.getTipoRelacion() == null ? null : p.getTipoRelacion().name(),
-                p.getTelefono(),
-                p.getEmail(),
-                p.getDireccion(),
-                p.getEstado(),
-                p.getFechaRegistro()
-        );
-    }
+	public static PersonaDto toDto(Persona p) {
+	    if (p == null) return null;
+	    return new PersonaDto(
+	            p.getId(),
+	            p.getTipoPersona() == null ? null : p.getTipoPersona().name(),
+	            p.getNombreRazonSocial(),
+	            p.getTipoDocumento() == null ? null : p.getTipoDocumento().name(),
+	            p.getNumeroDocumento(),
+	            p.getTipoRelacion() == null ? null : p.getTipoRelacion().name(),
+	            p.getTelefono(),
+	            p.getEmail(),
+	            p.getDireccion(),
+	            p.getEstado(),
+	            p.getFechaRegistro(),
+	            p.getUsuario() != null ? p.getUsuario().getUsername() : null  // 👈 nuevo
+	    );
+	}
     public static Persona toEntity(PersonaDto d) {
         if (d == null) return null;
         Persona p = new Persona();

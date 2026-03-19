@@ -8,5 +8,6 @@ import lombok.Data;
 public class JwtResponse {
     private String token;
     private String username;
+    private String emailAcceso;          // <- agregar
     private java.util.List<String> roles;
 }

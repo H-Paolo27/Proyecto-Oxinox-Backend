@@ -16,4 +16,5 @@ public class PersonaDto {
     private String direccion;
     private Boolean estado;
     private LocalDateTime fechaRegistro;
+    private String username;
 }

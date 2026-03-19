@@ -2,7 +2,6 @@ package com.osinox.osinox.entity;
 
 import java.time.LocalDateTime;
 
-import java.time.LocalDateTime;
 import java.util.List;
 import jakarta.persistence.*;
 import lombok.*;
@@ -55,10 +54,10 @@ public class Persona {
     @Column(name = "fecha_registro", nullable = false, updatable = false)
     private LocalDateTime fechaRegistro;
 
-    // Relación 1 a 1 con Usuario
-    @OneToOne(mappedBy = "persona")
+ // Relación 1 a 1 con Usuario
+    @OneToOne(mappedBy = "persona", fetch = FetchType.LAZY)
     private Usuario usuario;
-
+    
     // Relación 1 a 1 con Trabajador
     @OneToOne(mappedBy = "persona")
     private Trabajador trabajador;

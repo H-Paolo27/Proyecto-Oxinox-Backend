@@ -29,7 +29,7 @@ public class SecurityConfig {
     public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
     }
-    // 🔐 Authentication Provider
+    
     
     // 🔐 Security Filter Chain
     @Bean
@@ -40,6 +40,12 @@ public class SecurityConfig {
 	        .authorizeHttpRequests(auth -> auth
 	            .requestMatchers(HttpMethod.OPTIONS, "/**").permitAll()  // <- agregar
 	            .requestMatchers("/api/auth/**").permitAll()
+	            
+	            // ── agregar estas 2 líneas ──────────────────────────────
+	            .requestMatchers(HttpMethod.GET, "/api/productos/**").permitAll()
+	            .requestMatchers("/api/admin/productos/**").hasAnyRole("ADMIN","GERENTE","ALMACEN","JEFE_TALLER")
+	            // ────────────────────────────────────────────────────────
+
 	            .anyRequest().authenticated()
 	        )
             .sessionManagement(session ->

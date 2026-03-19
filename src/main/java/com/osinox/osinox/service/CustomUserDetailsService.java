@@ -20,17 +20,15 @@ public class CustomUserDetailsService implements UserDetailsService {
     private final UsuarioRepository usuarioRepository;
 
     @Override
-    public UserDetails loadUserByUsername(String username)
+    public UserDetails loadUserByUsername(String identifier)
             throws UsernameNotFoundException {
+        Usuario usuario = usuarioRepository
+                .findByUsernameOrEmailAcceso(identifier, identifier)
+                .orElseThrow(() -> new UsernameNotFoundException("Usuario no encontrado"));
 
-    	Usuario usuario = usuarioRepository.findByUsernameWithRoles(username)
-    	        .orElseThrow(() -> new UsernameNotFoundException("Usuario no encontrado"));
-
-    	
         return new org.springframework.security.core.userdetails.User(
                 usuario.getUsername(),
                 usuario.getPassword(),
-                // Mapear a authorities con prefijo ROLE_ para que hasRole("ADMIN") funcione
                 usuario.getRoles().stream()
                         .map(rol -> new SimpleGrantedAuthority("ROLE_" + rol.getNombre()))
                         .collect(Collectors.toList())

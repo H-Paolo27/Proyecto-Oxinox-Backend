@@ -11,7 +11,6 @@ import lombok.*;
 @ToString(exclude = "persona")
 @Entity
 @Table(name = "usuario")
-
 public class Usuario {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -21,13 +20,16 @@ public class Usuario {
     @Column(name = "username", unique = true, nullable = false, length = 50)
     private String username;
 
+    @Column(name = "email_acceso", unique = true, length = 150)
+    private String emailAcceso;
+
     @Column(name = "password", nullable = false, length = 255)
     private String password;
 
     @Column(name = "activo", nullable = false)
     private Boolean activo;
 
-    @OneToOne
+    @OneToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     @JoinColumn(name = "id_persona", nullable = false)
     private Persona persona;
 

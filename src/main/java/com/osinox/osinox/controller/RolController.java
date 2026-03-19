@@ -32,7 +32,7 @@ import lombok.RequiredArgsConstructor;
 public class RolController {
 
     private final RolRepository rolRepository;
-    private final RolService rolService;
+    private final RolService RolService;
 
     @GetMapping
     public ResponseEntity<List<RolDto>> getAllRoles() {
@@ -115,5 +115,20 @@ public class RolController {
         if (opt.isEmpty())
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Rol no encontrado");
         return ResponseEntity.ok(RolMapper.toDto(opt.get()));
+    }
+    @GetMapping("/{id}/usuarios")
+    public ResponseEntity<?> getUsuariosByRol(@PathVariable Long id) {
+        Optional<Rol> opt = rolRepository.findById(id);
+        if (opt.isEmpty())
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Rol no encontrado");
+        
+        List<Map<String, Object>> usuarios = opt.get().getUsuarios().stream()
+                .map(u -> Map.of(
+                    "id", (Object) u.getId(),
+                    "username", u.getUsername(),
+                    "activo", u.getActivo()
+                ))
+                .collect(Collectors.toList());
+        return ResponseEntity.ok(usuarios);
     }
 }
